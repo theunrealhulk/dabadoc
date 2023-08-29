@@ -11,8 +11,7 @@ Rails.application.routes.draw do
       post 'signout', to: "users#signOut"
       post 'post_question', to: "users#postQuestion"
       post 'post_answer', to: "users#postAnswer"
-      post 'like_question', to: "users#likeQuestion"
-      post 'unlike_question', to: "users#unlikeQuestion" 
+      post 'toggle_favorites', to: "users#toggleFavorites"
     end
   end
 end

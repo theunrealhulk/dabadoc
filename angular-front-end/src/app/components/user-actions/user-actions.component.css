@@ -24,6 +24,7 @@ li a{
 }
 .question h5{
   font-weight: 700;
+  margin: 1em;
 }
 .question-text{
   padding: .5em;
@@ -33,5 +34,9 @@ li a{
   border: 1px solid rgb(196, 194, 194) !important;
 }
 .qActions{
-  margin-top: 2em;
+  margin-top: 1em;
+}
+.action
+{
+  cursor: pointer !important;
 }

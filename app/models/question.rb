@@ -5,6 +5,7 @@ class Question
   field :title, type: String
   field :content, type: String
   field :location, type: String
+  field :answers, type: Array, default: []
 
   belongs_to :user
 

@@ -3,8 +3,7 @@ class Api::V1::UsersController < ApplicationController
         :authUser,
         :postQuestion,
         :postAnswer,
-        :likeQuestion,
-        :unlikeQuestion,
+        :toggleFavorites,
         :favorits
     ]
 
@@ -13,8 +12,7 @@ class Api::V1::UsersController < ApplicationController
         :signOut,
         :postQuestion,
         :postAnswer,
-        :likeQuestion,
-        :unlikeQuestion,
+        :toggleFavorites,
         :favorits,
         :listQuestions,
         :getQuestion
@@ -30,7 +28,7 @@ class Api::V1::UsersController < ApplicationController
 
     def authUser
         if @user
-            render json: {user:@user.json,ok:true}, status: :ok
+            render json: {user:@user,ok:true}, status: :ok
         else
             render json:{msg:"User Not found",ok:false}, status: :unprocessable_entity
         end
@@ -85,7 +83,7 @@ class Api::V1::UsersController < ApplicationController
             )
             questions = Question.order_by(location: 1).collation(locale: "en", strength: 2)
             if question.save
-                render json: { questions: questions, ok: true }, status: :ok
+                render json: questions  , status: :ok
             else
                 render json: { msg: "Unable to save question", errors: question.errors, ok: false }, status: :unprocessable_entity
             end
@@ -116,12 +114,23 @@ class Api::V1::UsersController < ApplicationController
         render json: {msg:"postAnswer.."} ,status: :ok
     end
 
-    def likeQuestion
-        render json: {msg:"likeQuestion.."} ,status: :ok
-    end
-
-    def unlikeQuestion
-        render json: {msg:"unlikeQuestion.."} ,status: :ok
+    def toggleFavorites
+        if @user
+             if @user.favorites.include?(params[:questionId])
+                #remove
+                @user.favorites.delete(params[:questionId])
+            else
+                #add
+                @user.favorites.push(params[:questionId])
+            end
+            if @user.save
+                render json: {user:@user} ,status: :ok
+            else
+                render json: {msg:"could not update user.."} ,status: :ok
+             end
+        else
+            render json: {msg:"could get authenticated User",ok:false} ,status: :unprocessable_entity
+        end
     end
 
     def favorits

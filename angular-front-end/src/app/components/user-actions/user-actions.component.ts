@@ -13,17 +13,23 @@ export class UserActionsComponent {
     title:'',
     content: '',
     location: '',
+    favorites:[]
   }
   questions: any = [];
+  currentUser:any
   constructor(private apiService: ApiServiceService) {
   }
   ngOnInit(){
-    // get maps
-    // this.initAutocomplete()
+
     this.getQuestions();
-
+    this.getAuthUser()
   }
-
+  getAuthUser(){
+    this.apiService.getUser().subscribe((data:any)=>{
+    this.currentUser=data.user;
+    console.log(this.currentUser.favorites)
+    })
+  }
   getQuestions() {
     this.apiService.getQuestions()
       .subscribe((data) => {
@@ -34,20 +40,6 @@ export class UserActionsComponent {
       });
   }
 
-  // initAutocomplete(){
-
-  //   // Create the search box and link it to the UI element.
-  //   // const input = document.getElementById("pac-input");
-
-  //   // const searchBox = new google.maps.places.SearchBox(input);
-
-  //   // searchBox.addListener("places_changed", () => {
-  //   //   const places = searchBox.getPlaces();
-  //   //   if (places.length == 0) {
-  //   //     return;
-  //   //   }
-  //   // });
-  // }
   signOut(){
     this.apiService.signOut().subscribe(data => {
       localStorage.removeItem('api_key');
@@ -63,9 +55,7 @@ export class UserActionsComponent {
   postQuestion(){
     this.apiService.postQuestion(this.question.title,this.question.content,this.question.location)
     .subscribe(data => {
-      //console.log(data.questions)
-
-      //this.questions=data.questions
+      this.questions = data
     },e=>{
       let msg="Invalid Form Fields\n\n"
       if(e.error.error)
@@ -86,4 +76,30 @@ export class UserActionsComponent {
 
     });
   }
+
+  likeToggle(event: any,qId:string) {
+
+    const clickedElement = event.currentTarget;
+    console.log('clickedElement',clickedElement.querySelector('i').classList);
+    if(clickedElement.querySelector('i').classList.contains('bi-heart-fill'))
+    {
+      clickedElement.querySelector('i').classList.remove('bi-heart-fill');
+      clickedElement.querySelector('i').classList.add('bi-heart');
+    }else{
+      clickedElement.querySelector('i').classList.add('bi-heart-fill');
+      clickedElement.querySelector('i').classList.remove('bi-heart');
+    }
+
+
+    this.apiService.likeToggle(qId).subscribe(data=>{
+      console.log(data)
+    })
+  }
+  showQuestion(qId:string){
+
+  }
+  openPostAnswer(qId:string){
+
+  }
+
 }

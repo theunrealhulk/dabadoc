@@ -31,7 +31,7 @@
       <input type="text" class="form-control" id="pac-input" name="location" placeholder="type you location" required  [(ngModel)]="question.location">
     </div>
     <hr>
-    <button class="btn btn-outline-success" ><i class="bi bi-chat-text"></i> post</button>
+    <button class="btn btn-outline-success" >post <i class="bi bi-chat-text"></i></button>
   </form>
 
   <br>
@@ -45,10 +45,17 @@
     <p class="question-text">{{q.content}}</p>
     <p class="location"><i class="bi bi-geo-alt"></i> {{q.location}}</p>
     <ul class="qActions">
-      <li><a href="" title="like this question"><i class="bi bi-heart"></i></a></li>
-      <li><a href="" title="show question"><i class="bi bi-chat-text"></i> 0</a></li>
-      <li><a href="" title="post an answer"><i class="bi bi-send"></i></a></li>
+      <li><a id="{{q._id.$oid}}" (click)="likeToggle($event,q._id.$oid)" class="action"  title="like this question">
+        <i
+        [ngClass]="{
+          'bi bi-heart-fill': currentUser?.favorites?.includes(q._id.$oid),
+          'bi bi-heart': !currentUser?.favorites?.includes(q._id.$oid)
+        }"
+        ></i></a></li>
+      <li><a id="{{q._id.$oid}}"   class="action" title="show question"><i class="bi bi-chat-text"></i> 0</a></li>
+      <li><a id="{{q._id.$oid}}"  class="action" title="post an answer"><i class="bi bi-send"></i></a></li>
     </ul>
   </div>
+
 
 </div>

@@ -3,4 +3,5 @@ export interface Question{
   title:string;
   content:string;
   location:string;
+  favorites:string[];
 }

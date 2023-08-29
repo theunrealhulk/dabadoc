@@ -3,14 +3,13 @@ this a simple web application with [ruby on rails](https://rubyonrails.org) on t
 the purpose of the app is general topic questions related to a location kind of app
 where the user asks a question about a specific location.
 ## Dev Environment  
-in order to test the app you the following tools installed in your OS:<br>
+in order to test the app you the following tools must be installed in your OS:<br>
 * ruby 
 * rails
 * mongodb
 * nodejs
 ## Install App Dependencies
 ```
-cd backend 
 bundle install
 cd ../front
 npm i

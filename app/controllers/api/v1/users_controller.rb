@@ -38,7 +38,7 @@ class Api::V1::UsersController < ApplicationController
         if user.save
             render json: {user:user,ok:'true'}, status: :ok
         else
-            render json:{msg:"cannot add user", error: user.errors,ok:'false' }, status: :unprocessable_entity
+            render json:{msg:"cannot add user ", error: user.errors,ok:'false' }, status: :unprocessable_entity
         end
     end
 

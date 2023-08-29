@@ -1,0 +1,13 @@
+ul{
+  float: right;
+  margin-top: 2em;
+}
+li{
+  list-style: none;
+  display: inline;
+  margin-right: .5em;
+  padding: 1em;
+}
+li a{
+  text-decoration: solid;
+}

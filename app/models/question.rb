@@ -6,7 +6,6 @@ class Question
   field :content, type: String
   field :location, type: String
 
-
   belongs_to :user
 
   validates :title,uniqueness: true, presence: true

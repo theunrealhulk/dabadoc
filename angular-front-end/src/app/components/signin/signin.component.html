@@ -1,0 +1,27 @@
+<div class="container">
+  <form (ngSubmit)="onFormSubmit()">
+    <h3> Identification</h3>
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required [(ngModel)]="email">
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">password</label>
+      <input type="password" class="form-control" id="password" name="password" placeholder="password" required  [(ngModel)]="password">
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-6 btnform">
+        <i class="fas fa-camera-retro"></i>
+        <button type="submit" class="btn btn-primary" title="(already a member ? click to login)" (click)="setSubmitButton('signIn')">
+          <i class="bi bi-box-arrow-right"></i> Sign In
+        </button>
+      </div>
+      <div class="col-md-6 btnform">
+        <button type="submit" class="btn btn-success" title="(don't have an account ? click to create new account)" (click)="setSubmitButton('signUp')">
+          <i class="bi bi-person-fill-add"></i> Sign Up
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

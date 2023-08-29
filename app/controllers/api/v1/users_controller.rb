@@ -20,9 +20,9 @@ class Api::V1::UsersController < ApplicationController
     def getUsers
         user = User.all()
         if user
-            render json: user ,status: :ok
+            render json: {user:user,ok:'true'} ,status: :ok
         else
-            render json:{msg:"No Data"}, status: :unprocessable_entity
+            render json:{msg:"No Data",ok:'false'}, status: :unprocessable_entity
         end
     end
     # def showUser
@@ -36,9 +36,9 @@ class Api::V1::UsersController < ApplicationController
     def signUp
         user = User.new(userparams)
         if user.save
-            render json: user, status: :ok
+            render json: {user:user,ok:'true'}, status: :ok
         else
-            render json:{message:"cannot add user", error: user.errors }, status: :unprocessable_entity
+            render json:{msg:"cannot add user", error: user.errors,ok:'false' }, status: :unprocessable_entity
         end
     end
 
@@ -46,15 +46,15 @@ class Api::V1::UsersController < ApplicationController
         user = User.find_by(:email=>params[:email])
 
         if !user
-          render json: { msg:'user not found!'},status: :unprocessable_entity
+          render json: { msg:'invalid email or password',ok:'false'},status: :unprocessable_entity
           return true
         end
         if user.authenticate(params[:password])
           token=self.create_token(user.id.to_s, user.email.to_s)
           user.set(:token =>token)
-          render json: { msg:'connected!', token: user.token},status: :ok
+          render json: { msg:'connected!', token: user.token,ok:'true'},status: :ok
         else
-          render json:{msg:"invalid email or password"}, status: :unprocessable_entity
+          render json:{msg:"invalid email or password",ok:'false'}, status: :unprocessable_entity
         end
     end
 
@@ -64,12 +64,12 @@ class Api::V1::UsersController < ApplicationController
         if user
             user.update(token: nil)
             if user.save
-                render json: { msg: 'Logged out successfully'  }, status: :ok
+                render json: { msg: 'Logged out successfully',ok:'true'  }, status: :ok
             else
-                render json: { msg: 'cannot update user',user:user  }, status: :unprocessable_entity
+                render json: { msg: 'cannot update user',user:user ,ok:'false' }, status: :unprocessable_entity
             end
         else
-            render json: { msg: 'no user with the given token'}, status: :unprocessable_entity
+            render json: { msg: 'no user with the given token',ok:'false'}, status: :unprocessable_entity
         end
     end
 

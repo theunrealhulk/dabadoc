@@ -48,6 +48,16 @@ export class ApiServiceService {
 
     return this.http.get('http://localhost:3000/api/v1/questions',{headers});
   }
+  getQuestion(questionId:string){
+    let token = localStorage.getItem('api_key');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'token': `${token}`
+    });
+
+    return this.http.get(`http://localhost:3000/api/v1/question/${questionId}`,{headers});
+  }
+
   likeToggle(questionId:string){
     let token=localStorage.getItem("api_key");
     const headers = new HttpHeaders({

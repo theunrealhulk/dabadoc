@@ -1,0 +1,17 @@
+li{
+list-style: none;
+margin-top: 2em;
+}
+.answer{
+  margin-top: 2em;
+  background-color: #9b61f8;
+  color: white;
+  padding: 2em;
+  border-radius: 18px;
+}
+.q-content{
+  border: 1px solid #9b61f8;
+  padding: 2em;
+  background-color: #c3afe4;
+  border-radius: 10px;
+}

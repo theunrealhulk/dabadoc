@@ -3,7 +3,8 @@ class Api::V1::UsersController < ApplicationController
         :authUser,
         :postQuestion,
         :postAnswer,
-        :toggleFavorites
+        :toggleFavorites,
+        :getQuestion
     ]
 
     before_action :check_token,only: [ 
@@ -105,7 +106,16 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def getQuestion
-        #render json: {msg:"getQuestion.."} ,status: :ok
+        if @user
+            question = Question.find_by(id: params[:questionId])
+            if question
+                render json:question  ,status: :ok
+            else
+                render json: {msg:"could get question",ok:false} ,status: :unprocessable_entity
+            end
+        else
+            render json: {msg:"could get authenticated User",ok:false} ,status: :unprocessable_entity
+        end
     end
 
     def postAnswer

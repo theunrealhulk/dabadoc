@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiServiceService } from '../../services/api-service.service';
+import { Question } from 'src/app/models';
 
 @Component({
   selector: 'app-show-question',
@@ -6,7 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./show-question.component.css']
 })
 export class ShowQuestionComponent {
+  question:any={}
+  constructor(private apiService: ApiServiceService){}
   ngOnInit(){
-    console.log('loading current question')
+    const questionId=location.href.split('id=')[1]
+    console.log(questionId);
+    this.apiService.getQuestion(questionId).subscribe((data)=>{
+      this.question = data;
+      console.log(this.question)
+    })
+
   }
 }

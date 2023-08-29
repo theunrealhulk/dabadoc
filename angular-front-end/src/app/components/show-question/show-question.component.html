@@ -1,3 +1,15 @@
-<ul class="user-actions">
-  <li><a href="/questions" class="btn btn-outline-dark" href=""><i class="bi bi-question-circle"></i> questions</a></li>
-</ul>
+<div class="container">
+
+  <ul class="user-actions">
+    <li><a href="/questions" class="btn btn-outline-dark" href=""> back to Questions <i class="bi bi-question-circle"></i></a></li>
+  </ul>
+  <div class="question-detail">
+    <div class="jumbotron">
+      <h3>{{question.title}}</h3>
+      <p class="q-content">{{question.content}}</p>
+      <p><i class="bi bi-geo-alt"></i> {{question.location}}</p>
+      <hr>
+      <h5 class="answer" *ngFor="let answer of question.answers">{{answer}}</h5>
+    </div>
+  </div>
+</div>

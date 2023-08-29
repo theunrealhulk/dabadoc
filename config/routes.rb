@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       post 'signin', to: "users#signIn"
       #authorized routes
       get 'questions', to: "users#listQuestions"
-      get 'question', to: "users#getQuestion"
+      get 'question/:questionId', to: "users#getQuestion"
       get 'get_user', to: "users#authUser" 
       post 'signout', to: "users#signOut"
       post 'post_question', to: "users#postQuestion"

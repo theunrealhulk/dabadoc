@@ -40,3 +40,28 @@ li a{
 {
   cursor: pointer !important;
 }
+#answer-dialog,#question-dialog{
+  position: fixed !important;
+  justify-content: center;
+
+  margin: auto !important;
+  padding: 0;
+
+  width: 50%;
+  height: 50%;
+
+  display: none !important;
+  border-radius: 30px;
+  color: white;
+  z-index: 11;
+}
+.answer-dialog *{
+  margin: 2em;
+}
+
+#question-dialog{
+  background: #6f42c1;
+}
+#answer-dialog{
+  background-color:#0d6efd!important;
+}

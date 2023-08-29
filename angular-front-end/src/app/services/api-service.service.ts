@@ -56,4 +56,13 @@ export class ApiServiceService {
     });
     return this.http.post('http://localhost:3000/api/v1/toggle_favorites',{questionId},{headers});
   }
+  postAnswer(questionId:string,answer:string){
+    let token=localStorage.getItem("api_key");
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'token': `${token}`
+    });
+    return this.http.post('http://localhost:3000/api/v1/post_answer',{questionId,answer},{headers});
+  }
+
 }

@@ -6,7 +6,6 @@ Rails.application.routes.draw do
       #authorized routes
       get 'questions', to: "users#listQuestions"
       get 'question', to: "users#getQuestion"
-      get 'favorites', to: "users#favorits"
       get 'get_user', to: "users#authUser" 
       post 'signout', to: "users#signOut"
       post 'post_question', to: "users#postQuestion"

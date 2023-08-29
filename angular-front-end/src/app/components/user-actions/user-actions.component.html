@@ -37,6 +37,12 @@
   <br>
   <hr>
   <br>
+  <div id="answer-dialog" class="dialog">
+    <h1>answer a question</h1>
+  </div>
+  <div id="question-dialog" class="dialog">
+    <h1>answer a question</h1>
+  </div>
 
   <h3 *ngIf="this.questions.length>0" >There is {{questions.length}} question(s)</h3>
   <br>
@@ -52,10 +58,9 @@
           'bi bi-heart': !currentUser?.favorites?.includes(q._id.$oid)
         }"
         ></i></a></li>
-      <li><a id="{{q._id.$oid}}"   class="action" title="show question"><i class="bi bi-chat-text"></i> 0</a></li>
-      <li><a id="{{q._id.$oid}}"  class="action" title="post an answer"><i class="bi bi-send"></i></a></li>
+      <li><a id="{{q._id.$oid}}" (click)="showQuestion(q._id.$oid)" class="action" title="show question"><i class="bi bi-chat-text"></i> {{q.answers.length}}</a></li>
+      <li><a id="{{q._id.$oid}}" (click)="openPostAnswer(q._id.$oid)" class="action" title="post an answer"><i class="bi bi-send"></i></a></li>
     </ul>
   </div>
-
 
 </div>

@@ -28,7 +28,7 @@ export class UserActionsComponent {
   getAuthUser(){
     this.apiService.getUser().subscribe((data:any)=>{
     this.currentUser=data.user;
-    console.log(this.currentUser.favorites)
+    // console.log(this.currentUser.favorites)
     })
   }
   getQuestions() {
@@ -36,10 +36,7 @@ export class UserActionsComponent {
       .subscribe((data) => {
           this.questions = data
           this.favoriteQuestions=data
-          for(let f of this.favoriteQuestions){
-            console.log(f.id)
-          }
-          console.log(this.questions);
+          // console.log(this.questions);
       }, error => {
         console.error("Error", error);
       });
@@ -107,10 +104,21 @@ export class UserActionsComponent {
     })
   }
   showQuestion(qId:string){
+    console.log('showQuestion',qId)
+
 
   }
   openPostAnswer(qId:string){
+    console.log('openPostAnswer',qId)
 
+    const answer=prompt('Enter your answer')
+    console.log(answer)
+    if(answer){
+      this.apiService.postAnswer(qId , answer).subscribe((data)=>{
+        this.questions = data
+        this.favoriteQuestions=data
+      })
+    }
   }
 
 }

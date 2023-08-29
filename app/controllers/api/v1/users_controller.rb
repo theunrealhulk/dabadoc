@@ -3,8 +3,7 @@ class Api::V1::UsersController < ApplicationController
         :authUser,
         :postQuestion,
         :postAnswer,
-        :toggleFavorites,
-        :favorits
+        :toggleFavorites
     ]
 
     before_action :check_token,only: [ 
@@ -13,7 +12,6 @@ class Api::V1::UsersController < ApplicationController
         :postQuestion,
         :postAnswer,
         :toggleFavorites,
-        :favorits,
         :listQuestions,
         :getQuestion
     ]
@@ -107,11 +105,27 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def getQuestion
-        render json: {msg:"getQuestion.."} ,status: :ok
+        #render json: {msg:"getQuestion.."} ,status: :ok
     end
 
     def postAnswer
-        render json: {msg:"postAnswer.."} ,status: :ok
+        if @user
+            question = Question.find_by(id:params[:questionId])
+            if question
+                question.answers.push(@user.email + " : " + params[:answer])
+                if question.save
+                    questions = Question.order_by(location: 1).collation(locale: "en", strength: 2)
+                    render json: questions,status: :ok
+                else
+                    render json: {msg:"could find update question",ok:false} ,status: :unprocessable_entity
+                end
+            else
+                render json: {msg:"could find the question to answer",ok:false} ,status: :unprocessable_entity
+            end
+        else
+            render json: {msg:"could get authenticated User",ok:false} ,status: :unprocessable_entity
+        end
+        #render json: {msg:"postAnswer.."} ,status: :ok
     end
 
     def toggleFavorites
@@ -131,10 +145,6 @@ class Api::V1::UsersController < ApplicationController
         else
             render json: {msg:"could get authenticated User",ok:false} ,status: :unprocessable_entity
         end
-    end
-
-    def favorits
-        render json: {msg:"favorits.."} ,status: :ok
     end
 
     private

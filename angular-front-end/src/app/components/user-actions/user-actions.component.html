@@ -40,7 +40,7 @@
 
   <h3 *ngIf="this.questions.length>0" >There is {{questions.length}} question(s)</h3>
   <br>
-  <div class="question" *ngFor="let q of this.questions">
+  <div class="question" *ngFor="let q of this.favoriteQuestions">
     <h5>{{q.title}}</h5>
     <p class="question-text">{{q.content}}</p>
     <p class="location"><i class="bi bi-geo-alt"></i> {{q.location}}</p>

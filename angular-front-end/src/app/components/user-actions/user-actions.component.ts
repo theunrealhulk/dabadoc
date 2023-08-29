@@ -9,13 +9,14 @@ import { Question } from '../../models';
 })
 export class UserActionsComponent {
   question:Question={
-    id:'',
+    _id: { $oid: '' },
     title:'',
     content: '',
     location: '',
     favorites:[]
   }
   questions: any = [];
+  favoriteQuestions: any = [];
   currentUser:any
   constructor(private apiService: ApiServiceService) {
   }
@@ -34,6 +35,10 @@ export class UserActionsComponent {
     this.apiService.getQuestions()
       .subscribe((data) => {
           this.questions = data
+          this.favoriteQuestions=data
+          for(let f of this.favoriteQuestions){
+            console.log(f.id)
+          }
           console.log(this.questions);
       }, error => {
         console.error("Error", error);
@@ -49,13 +54,19 @@ export class UserActionsComponent {
   }
 
   favorites(){
-    console.log("favorites")
+     if(this.favoriteQuestions.length>=this.questions.length){
+      this.favoriteQuestions = this.favoriteQuestions.filter( (question:Question) => this.currentUser?.favorites.includes(question._id.$oid));
+     }
+     else{
+       this.favoriteQuestions = this.questions
+     }
   }
 
   postQuestion(){
     this.apiService.postQuestion(this.question.title,this.question.content,this.question.location)
     .subscribe(data => {
       this.questions = data
+      this.favoriteQuestions=data
     },e=>{
       let msg="Invalid Form Fields\n\n"
       if(e.error.error)

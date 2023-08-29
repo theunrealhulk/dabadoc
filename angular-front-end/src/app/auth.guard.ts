@@ -16,7 +16,6 @@ export class AuthGuard implements CanActivate {
     const isAuthenticated = localStorage.getItem('api_key');
 
     if (isAuthenticated) {
-      console.log('authenticated')
       if (state.url === '/') {
         // Redirect to '/questions' if the route is '/'
         return this.router.createUrlTree(['/questions']);

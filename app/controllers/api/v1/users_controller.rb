@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApplicationController
     before_action :getUser,only: [
+        :authUser,
         :postQuestion,
         :postAnswer,
         :likeQuestion,
@@ -8,6 +9,7 @@ class Api::V1::UsersController < ApplicationController
     ]
 
     before_action :check_token,only: [ 
+        :authUser,
         :signOut,
         :postQuestion,
         :postAnswer,
@@ -25,13 +27,14 @@ class Api::V1::UsersController < ApplicationController
             render json:{msg:"No Data",ok:'false'}, status: :unprocessable_entity
         end
     end
-    # def showUser
-    #     if @user
-    #         render json: @user, status: :ok
-    #     else
-    #         render json:{msg:"User Not found"}, status: :unprocessable_entity
-    #     end
-    # end
+
+    def authUser
+        if @user
+            render json: {user:@user.json,ok:true}, status: :ok
+        else
+            render json:{msg:"User Not found",ok:false}, status: :unprocessable_entity
+        end
+    end
 
     def signUp
         user = User.new(userparams)
@@ -73,9 +76,40 @@ class Api::V1::UsersController < ApplicationController
         end
     end
 
-
     def postQuestion
-        render json: {msg:"postQuestion.."} ,status: :ok
+        if @user
+            question = @user.questions.build(
+                title: params[:title],
+                content: params[:content],
+                location: params[:location]
+            )
+            questions = Question.order_by(location: 1).collation(locale: "en", strength: 2)
+            if question.save
+                render json: { questions: questions, ok: true }, status: :ok
+            else
+                render json: { msg: "Unable to save question", errors: question.errors, ok: false }, status: :unprocessable_entity
+            end
+        else
+            render json: { msg: "Unable to get authenticated user", ok: false }, status: :unprocessable_entity
+        end
+    end
+
+    def listQuestions
+
+        token = request.headers['token']
+        user = User.find_by(token: token)
+    
+        if user
+    
+            questions = Question.order_by(location: 1).collation(locale: "en", strength: 2)
+            render json:questions , status: :ok
+        else
+            render json: { msg: "Unable to get authenticated user", ok: false ,token:token,user:user}, status: :unprocessable_entity
+        end
+    end
+
+    def getQuestion
+        render json: {msg:"getQuestion.."} ,status: :ok
     end
 
     def postAnswer
@@ -94,21 +128,12 @@ class Api::V1::UsersController < ApplicationController
         render json: {msg:"favorits.."} ,status: :ok
     end
 
-    def listQuestions
-        render json: {msg:"listQuestions.."} ,status: :ok
-    end
-
-    def getQuestion
-        render json: {msg:"getQuestion.."} ,status: :ok
-    end
-
-
     private
+        def getUser
+            token = request.headers['token']
+            @user = User.find_by(token: token)
+        end
         def userparams
             params.permit(:email, :password)
-        end
-        def getUser
-            @user = User.find_by(token: params[:token])
-            # @user = User.find(params[:id])
         end
 end

@@ -17,11 +17,27 @@ export class ApiServiceService {
   }
   signOut() {
     let token = localStorage.getItem('api_key');
-    console.log(token);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'token': `${token}`
     });
     return this.http.post('http://localhost:3000/api/v1/signout',{},{headers});
+  }
+  postQuestion(title: string,content: string,location:string){
+    let token = localStorage.getItem('api_key');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'token': `${token}`
+    });
+    return this.http.post('http://localhost:3000/api/v1/post_question',{title,content,location},{headers});
+  }
+  getQuestions(){
+    let token = localStorage.getItem('api_key');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'token': `${token}`
+    });
+
+    return this.http.get('http://localhost:3000/api/v1/questions',{headers});
   }
 }

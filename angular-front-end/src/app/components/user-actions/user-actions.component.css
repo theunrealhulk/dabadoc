@@ -1,4 +1,4 @@
-ul{
+ul.user-actions{
   float: right;
   margin-top: 2em;
 }
@@ -10,4 +10,28 @@ li{
 }
 li a{
   text-decoration: solid;
+}
+.question{
+  background-color: rgb(231, 227, 227);
+  padding: .3em;
+  margin: .4em;
+  border-radius: 5px;
+}
+.location{
+  font-size: small;
+  float: right;
+  margin-right: 1em;
+}
+.question h5{
+  font-weight: 700;
+}
+.question-text{
+  padding: .5em;
+  margin: .3em;
+  border-radius: 3px;
+  background-color: #ebe8e8;
+  border: 1px solid rgb(196, 194, 194) !important;
+}
+.qActions{
+  margin-top: 2em;
 }

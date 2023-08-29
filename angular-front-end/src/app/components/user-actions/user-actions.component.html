@@ -1,4 +1,54 @@
-<ul>
-  <li><button class="btn btn-outline-dark" href="" (click)="favorites()"><i class="bi bi-heart-fill"></i> favorites</button></li>
-  <li><button class="btn btn-outline-dark" href="" (click)="signOut()"><i class="bi bi-power"></i> sign out</button></li>
-</ul>
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap">
+</script>
+<script>
+  alert('hello');
+  let autocomplete
+  function initAutocomplete(){
+    autocomplete = new google.maps.places.Autocomplete(document.getElementById('location'), {
+      types:['establishment'],
+      fields:['place_id','geometry','name']
+    })
+  }
+</script>
+<div class="container">
+  <ul class="user-actions">
+    <li><button class="btn btn-outline-danger" href="" (click)="favorites()"><i class="bi bi-heart-fill"></i> favorites</button></li>
+    <li><button class="btn btn-outline-dark" href="" (click)="signOut()"><i class="bi bi-power"></i> sign out</button></li>
+  </ul>
+  <form (ngSubmit)="postQuestion()">
+    <h3>Ask your question</h3>
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title" name="title" placeholder="topic of your question" required [(ngModel)]="question.title">
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Content</label>
+      <textarea type="text" class="form-control" id="content" name="content" placeholder="content of the question" required [(ngModel)]="question.content"></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Location</label>
+      <input type="text" class="form-control" id="pac-input" name="location" placeholder="type you location" required  [(ngModel)]="question.location">
+    </div>
+    <hr>
+    <button class="btn btn-outline-success" ><i class="bi bi-chat-text"></i> post</button>
+  </form>
+
+  <br>
+  <hr>
+  <br>
+
+  <h3 *ngIf="this.questions.length>0" >There is {{questions.length}} question(s)</h3>
+  <br>
+  <div class="question" *ngFor="let q of this.questions">
+    <h5>{{q.title}}</h5>
+    <p class="question-text">{{q.content}}</p>
+    <p class="location"><i class="bi bi-geo-alt"></i> {{q.location}}</p>
+    <ul class="qActions">
+      <li><a href="" title="like this question"><i class="bi bi-heart"></i></a></li>
+      <li><a href="" title="show question"><i class="bi bi-chat-text"></i> 0</a></li>
+      <li><a href="" title="post an answer"><i class="bi bi-send"></i></a></li>
+    </ul>
+  </div>
+
+</div>

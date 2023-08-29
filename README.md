@@ -10,7 +10,6 @@ in order to test the app you the following tools installed in your OS:<br>
 * nodejs
 ## Install App Dependencies
 ```
-cd backend 
 bundle install
 cd ../front
 npm i

@@ -9,6 +9,7 @@ import { QuestionsComponent } from './components/questions/questions.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 
 import { UserActionsComponent } from './components/user-actions/user-actions.component';
+import { ShowQuestionComponent } from './components/show-question/show-question.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { UserActionsComponent } from './components/user-actions/user-actions.com
     SigninComponent,
     QuestionsComponent,
     FavoritesComponent,
-    UserActionsComponent
+    UserActionsComponent,
+    ShowQuestionComponent
   ],
   imports: [
     BrowserModule,
